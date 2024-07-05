@@ -1,29 +1,35 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-/* import mockup from "../assets/mockup.png"; */
+import rm2 from "../assets/rm2.png";
 
 function Home() {
   const navigate = useNavigate();
+  const active = useSelector((state) => state.auth.status);
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center">
+    <div className="w-full h-[90vh] flex max-md:flex-col animate-fadeIn  items-center justify-center">
       <div className=" text-center">
         <div className="">
-          <h1 className="text-5xl font-semibold font-primary mb-3 max-sm:text-3xl">
+          <h1 className="text-5xl max-md:text-3xl font-semibold font-primary mb-3 max-sm:text-3xl">
             You're Brain's Backup
           </h1>
           <p className="text-2xl max-sm:text-xl">
             <span className="inline-block font-semibold mr-1 ">NoteIT: </span>
             Think it,Note it, Get Note it now
           </p>
-          <button
-            className="my-4 bg-primary text-white py-3 px-14 rounded-md font-semibold"
-            onClick={() => navigate("/signup")}
-          >
-            Signup
-          </button>
+          {active ? null : (
+            <button
+              className="my-4 bg-primary text-white py-3 px-14 rounded-md font-semibold"
+              onClick={() => navigate("/signup")}
+            >
+              Signup
+            </button>
+          )}
         </div>
       </div>
-      <div>{/* add image here mmockups */}</div>
+      <div className="m-2 max-md:m-10 ml-20">
+        <img src={rm2} alt="" width={500} />
+      </div>
     </div>
   );
 }

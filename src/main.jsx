@@ -12,8 +12,7 @@ import Forgot from "./pages/Forgot.jsx";
 import ChangePassword from "./pages/ChangePassword.jsx";
 import AllNotes from "./pages/AllNotes.jsx";
 import Error from "./pages/Error.jsx";
-import Verify from "./pages/Verify.jsx";
-import AuthLayout from "./components/AuthLayout.jsx";
+
 import Favorates from "./pages/Favorates.jsx";
 const router = createBrowserRouter([
   {
@@ -22,75 +21,36 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <AuthLayout>
-            <Home />
-          </AuthLayout>
-        ),
+        element: <Home />,
       },
       {
         path: "/login",
-        element: (
-          <AuthLayout authentication={false}>
-            <Login />
-          </AuthLayout>
-        ),
+        element: <Login />,
       },
       {
         path: "/signup",
-        element: (
-          <AuthLayout authentication={false}>
-            <Signup />
-          </AuthLayout>
-        ),
+        element: <Signup />,
       },
       {
         path: "/forgot",
-        element: (
-          <AuthLayout authentication={false}>
-            <Forgot />
-          </AuthLayout>
-        ),
+        element: <Forgot />,
       },
       {
         path: "/change-password",
-        element: (
-          <AuthLayout authentication={false}>
-            <ChangePassword />
-          </AuthLayout>
-        ),
+        element: <ChangePassword />,
       },
       {
         path: "/all-notes",
-        element: (
-          <AuthLayout>
-            <AllNotes />
-          </AuthLayout>
-        ),
+        element: <AllNotes />,
       },
       {
         path: "/favorates",
-        element: (
-          <AuthLayout>
-            <Favorates />
-          </AuthLayout>
-        ),
+        element: <Favorates />,
       },
-      {
-        path: "/verify",
-        element: (
-          <AuthLayout authentication={false}>
-            <Verify />
-          </AuthLayout>
-        ),
-      },
+
       {
         path: "*",
-        element: (
-          <AuthLayout authentication={false}>
-            <Error />
-          </AuthLayout>
-        ),
+        element: <Error />,
       },
     ],
   },

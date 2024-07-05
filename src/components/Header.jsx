@@ -3,36 +3,27 @@ import { TfiAlignRight } from "react-icons/tfi";
 import { TfiClose } from "react-icons/tfi";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 import Logout from "./Logout";
 function Header() {
   const [open, setOpen] = useState(false);
-  const status = useSelector((state) => state.auth.status);
+
   const navItems = [
-    {
-      name: "About",
-      slug: "/about",
-      active: status,
-    },
     {
       name: "Notes",
       slug: "/all-notes",
-      active: status,
     },
     {
       name: "Favorites",
-      slug: "/favorites",
-      active: status,
+      slug: "/favorates",
     },
     {
       name: "Login",
       slug: "/login",
-      active: !status,
     },
     {
       name: "Signup",
       slug: "/signup",
-      active: !status,
     },
   ];
   const navigate = useNavigate();
@@ -58,20 +49,19 @@ function Header() {
             >
               {open ? <TfiClose /> : <TfiAlignRight />}
             </li>
-            {navItems.map((item) =>
-              item.active ? (
-                <li
-                  key={item.name}
-                  onClick={() => navigate(`${item.slug}`)}
-                  className={`mx-5 font-primary z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
-                    open ? "max-sm:block p-2 mr-8   " : "max-sm:hidden"
-                  }`}
-                >
-                  {item.name}
-                </li>
-              ) : null
-            )}
-            {status ? <Logout /> : null}
+            {navItems.map((item) => (
+              <li
+                key={item.name}
+                onClick={() => navigate(`${item.slug}`)}
+                className={`mx-5 font-primary z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
+                  open ? "max-sm:block p-2 mr-8   " : "max-sm:hidden"
+                }`}
+              >
+                {item.name}
+              </li>
+            ))}
+
+            <Logout />
           </ul>
         </nav>
       </header>

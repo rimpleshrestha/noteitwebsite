@@ -2,18 +2,16 @@ import React from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
-import auth from "../../appwrite/auth";
-import { useNavigate } from "react-router-dom";
+
 function ChangePassword() {
-  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const urlParam = new URLSearchParams(window.location.search);
+  /*   const urlParam = new URLSearchParams(window.location.search);
   const userId = urlParam.get("userId");
   const secret = urlParam.get("secret");
   const ChangePass = async (data) => {
     await auth.updateForgot(userId, secret, data);
     navigate("/login");
-  };
+  }; */
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center max-sm:px-10 ">
       <h1 className="text-2xl font-semibold font-primary">New password.</h1>

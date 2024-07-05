@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MOCK_DATA from "../../MOCK_DATA.json";
+
 import { nanoid } from "@reduxjs/toolkit";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
@@ -15,13 +15,11 @@ function AllNotes() {
     console.log(open);
   };
 
-  const [allData,setAllData]=useState([]);
-  axios.get("http://localhost:8070/Note/get").then(res=>{
+  const [allData, setAllData] = useState([]);
+  axios.get("http://localhost:8070/Note/get").then((res) => {
     console.log(res);
-    setAllData(res?.data)
-  })
-
-
+    setAllData(res?.data);
+  });
 
   return (
     <div className=" h-screen w-full">
@@ -53,41 +51,43 @@ function AllNotes() {
           </div>
         </div>
         {open ? <Modal /> : null}
-        {allData?.filter((item) => {
-          return search.toLowerCase() === ""
-            ? item
-            : item.title.toLowerCase().includes(search);
-        }).map((d) => (
-          <div
-            className={`bg-white transition-transform rounded-xl my-3 w-full shadow-xl block p-4 cursor-pointer ${
-              open ? `null` : `hover:scale-[1.06]`
-            } `}
-            key={nanoid()}
-          >
-            <p className="font-semibold font-primary  mt-3 mb-6 flex justify-between items-center">
-              {d.id}{" "}
-              {favorate ? (
-                <FaHeart
-                  className="cursor-pointer"
-                  onClick={() => setFavorate(!favorate)}
-                />
-              ) : (
-                <FaRegHeart
-                  className="cursor-pointer"
-                  onClick={() => setFavorate(!favorate)}
-                />
-              )}
-            </p>
-            <h1 className="text-xl font-semibold font-primary mt-2">
-              {d.title}
-            </h1>
-            <p className="font-primary my-2">
-              {d.content.length > 70
-                ? `${d.content.slice(0, 70)} ....`
-                : ` ${d.content}`}
-            </p>
-          </div>
-        ))}
+        {allData
+          ?.filter((item) => {
+            return search.toLowerCase() === ""
+              ? item
+              : item.title.toLowerCase().includes(search);
+          })
+          .map((d) => (
+            <div
+              className={`bg-white transition-transform rounded-xl my-3 w-full shadow-xl block p-4 cursor-pointer ${
+                open ? `null` : `hover:scale-[1.06]`
+              } `}
+              key={nanoid()}
+            >
+              <p className="font-semibold font-primary  mt-3 mb-6 flex justify-between items-center">
+                {d.id}{" "}
+                {favorate ? (
+                  <FaHeart
+                    className="cursor-pointer"
+                    onClick={() => setFavorate(!favorate)}
+                  />
+                ) : (
+                  <FaRegHeart
+                    className="cursor-pointer"
+                    onClick={() => setFavorate(!favorate)}
+                  />
+                )}
+              </p>
+              <h1 className="text-xl font-semibold font-primary mt-2">
+                {d.title}
+              </h1>
+              <p className="font-primary my-2">
+                {d.content.length > 70
+                  ? `${d.content.slice(0, 70)} ....`
+                  : ` ${d.content}`}
+              </p>
+            </div>
+          ))}
       </div>
     </div>
   );

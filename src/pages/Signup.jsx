@@ -3,46 +3,11 @@ import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
-import auth from "../../appwrite/auth";
-import { useDispatch } from "react-redux";
-import { login } from "../../tools/authSlice";
+import { Link } from "react-router-dom";
+
 import { Toaster, toast } from "react-hot-toast";
 function Signup() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
-  const signupSubmit = async (data) => {
-    const user = await auth.signup(data);
-    toast.loading("creating new account", {
-      duration: 2000,
-      position: "top-center",
-      icon: "👷‍♂️",
-    });
-
-    if (user) {
-      const verify = await auth.verification();
-      toast("mail sent", {
-        duration: 2000,
-        position: "top-center",
-      });
-      if (verify) {
-        toast("user verified", {
-          duration: 2000,
-          position: "top-center",
-          icon: "✅",
-        });
-        dispatch(login(user));
-        navigate("/all-notes");
-      }
-    }
-  };
-  const authGoogle = () => {
-    const signed = auth.login("google").then((res) => {
-      if (signed) dispatch(login(res));
-      navigate("/all-notes");
-    });
-  };
 
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center max-sm:px-10 ">
@@ -59,7 +24,7 @@ function Signup() {
             },
           }}
         />
-        <form onSubmit={handleSubmit(signupSubmit)}>
+        <form /* onSubmit= your signup here */>
           <Input
             label="name"
             labelStyle=" capitalize font-semibold my-2 "
@@ -99,18 +64,6 @@ function Signup() {
             Login
           </Link>
         </p>
-        <p className=" font-primary text-center font-medium">
-          Sign up from another method
-        </p>
-        <Button
-          className=" bg-white border-border mt-4 rounded-md flex items-center justify-around"
-          onClick={() => {
-            authGoogle();
-          }}
-        >
-          Log in by Google
-          <FcGoogle />
-        </Button>
       </div>
     </div>
   );
