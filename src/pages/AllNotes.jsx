@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { nanoid } from "@reduxjs/toolkit";
 import { FaRegHeart } from "react-icons/fa";
@@ -6,20 +6,36 @@ import { FaHeart } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import Modal from "./Modal";
 import axios from "axios";
+import ViewPost from "./ViewPost";
 function AllNotes() {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [favorate, setFavorate] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
   const handleOpen = () => {
     setOpen(!open);
     console.log(open);
   };
 
+  const handleViewPost = (d) => {
+    setSelectedNote(d);
+  };
+
   const [allData, setAllData] = useState([]);
-  axios.get("http://localhost:8070/Note/get").then((res) => {
-    console.log(res);
-    setAllData(res?.data);
-  });
+  useEffect(() => {
+    axios
+      .get("http://localhost:8070/Note/get")
+      .then((res) => {
+        setAllData(res?.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  /*   axios
+    .get("http://localhost:8070/Note/get")
+    .then((res) => {
+      setAllData(res?.data);
+    })
+    .catch((err) => console.log(err)); */
 
   return (
     <div className=" h-screen w-full">
@@ -51,6 +67,9 @@ function AllNotes() {
           </div>
         </div>
         {open ? <Modal /> : null}
+        {selectedNote && (
+          <ViewPost note={selectedNote} onClose={() => setSelectedNote(null)} />
+        )}
         {allData
           ?.filter((item) => {
             return search.toLowerCase() === ""
@@ -63,6 +82,7 @@ function AllNotes() {
                 open ? `null` : `hover:scale-[1.06]`
               } `}
               key={nanoid()}
+              onClick={() => handleViewPost(d)}
             >
               <p className="font-semibold font-primary  mt-3 mb-6 flex justify-between items-center">
                 {d.id}{" "}
