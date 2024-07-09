@@ -45,10 +45,6 @@ function Login() {
         >
           forgot your password?
         </Link>
-        <p className=" font-primary text-center font-medium">
-          Log in from another method
-        </p>
-        
       </div>
     </div>
   );

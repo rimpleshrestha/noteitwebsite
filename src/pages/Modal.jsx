@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 
-function Modal() {
+function Modal({ initialNote, onClose }) {
   const [close, setClose] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
+
+  useEffect(() => {
+    if (initialNote) {
+      setValue("title", initialNote.title);
+      setValue("content", initialNote.content);
+      // Assuming 'favorate' is the correct field name based on your previous implementation
+      setValue("favorate", initialNote.favorate);
+    }
+  }, [initialNote, setValue]);
 
   const createNew = (data) => {
     console.log({ ...data, user_id: localStorage.getItem("userId") });
@@ -18,8 +27,34 @@ function Modal() {
       .then((res) => {
         console.log(res);
         alert("Note saved");
+        setClose(true);
+      })
+      .catch((error) => {
+        console.error("Error creating note:", error);
+        // Handle error state or display error message to user
       });
-    setClose(true);
+  };
+
+  const updateNote = (data) => {
+    axios
+      .put(`http://localhost:8070/Note/update/${initialNote.id}`, data)
+      .then((res) => {
+        console.log(res);
+        alert("Note updated");
+        setClose(true);
+      })
+      .catch((error) => {
+        console.error("Error updating note:", error);
+        // Handle error state or display error message to user
+      });
+  };
+
+  const onSubmit = (data) => {
+    if (initialNote) {
+      updateNote(data); // Update existing note
+    } else {
+      createNew(data); // Create new note
+    }
   };
 
   const handleClose = () => {
@@ -27,18 +62,8 @@ function Modal() {
   };
 
   const handleDelete = () => {
-    // Add delete functionality here
-    // Example:
-    // axios.delete(`http://localhost:8070/Note/${noteId}`).then(() => {
-    //   alert("Note deleted");
-    //   handleClose();
-    // });
+    // Implement delete functionality if needed
     alert("Delete functionality to be implemented.");
-  };
-
-  const handleEdit = () => {
-    // Add edit functionality here
-    alert("Edit functionality to be implemented.");
   };
 
   return close ? null : (
@@ -48,7 +73,7 @@ function Modal() {
           className="absolute right-10 top-6 font-extrabold text-2xl cursor-pointer"
           onClick={handleClose}
         />
-        <form onSubmit={handleSubmit(createNew)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             label="Title"
             placeholder="Enter the title"
@@ -69,28 +94,19 @@ function Modal() {
             placeholder="Enter your body here"
             {...register("content", { required: true })}
           ></textarea>
-          <div className="flex justify-between mt-4">
-            <div>
-              <button
-                type="button"
-                className="bg-[#f02d3a] text-white py-2 px-4 rounded mr-4"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-              <button
-                // type="button"
-                // className="bg-primary text-white py-2 px-4 rounded"
-                // onClick={handleEdit}
-              >
-                {/* Edit */}
-              </button>
-            </div>
+          <div className="flex mt-4">
+            <button
+              type="button" // Change to 'button' to make it functional
+              className="bg-primary text-white py-2 px-4 rounded"
+              onClick={handleDelete} // Implement delete functionality
+            >
+              Delete
+            </button>
             <button
               type="submit"
-              className="bg-primary text-white py-2 px-4 rounded"
+              className="bg-primary text-white py-2 px-12 rounded ml-4"
             >
-              Submit
+              {initialNote ? "Update" : "Submit"}
             </button>
           </div>
         </form>

@@ -55,15 +55,17 @@ function Signup() {
             Sign up
           </Button>
         </form>
-        <p className="font-primary">
-          Already have an account?
+        <div className="mt-3 ">
+          <p className="font-primary inline-block mr-2 ">
+            Already have an account?{" "}
+          </p>
           <Link
             to="/login"
             className=" font-primary font-semibold my-3 inline-block"
           >
             Login
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
+import axios from "axios";
 
 function ViewPost({ note, onClose }) {
   const { register, handleSubmit, setValue } = useForm();
@@ -11,10 +12,42 @@ function ViewPost({ note, onClose }) {
     setValue("content", note.content);
     setValue("favorate", note.favorate);
   }, [note, setValue]);
+  const updateNote = async (data) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8070/Note/update/${note.id}`,
+        {
+          title: data.title,
+          content: data.content,
+          favorate: data.favorate,
+          user_id: note.user.id, // Assuming the note object has a user property with an id
+        }
+      );
+      console.log(response.data); // This will log "Note updated successfully"
+      onClose(); // Close the modal after successful update
+    } catch (error) {
+      console.error(
+        "Error updating note:",
+        error.response?.data || error.message
+      );
+      // Handle error (e.g., show an error message to the user)
+    }
+  };
 
-  const updateNote = async (data) => {};
-
-  const deleteNote = async () => {};
+  const deleteNote = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8070/Note/delete/${note.id}`
+      );
+      console.log(response.data);
+      onDelete(note.id); // Call the onDelete prop to update the parent component
+    } catch (error) {
+      console.error(
+        "Error deleting note:",
+        error.response?.data || error.message
+      );
+    }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
@@ -23,7 +56,7 @@ function ViewPost({ note, onClose }) {
           className="absolute right-10 top-6 font-extrabold text-2xl cursor-pointer"
           onClick={onClose}
         />
-        <form>
+        <form onSubmit={handleSubmit(updateNote)}>
           <Input
             label="Title"
             placeholder="enter the title"
@@ -54,6 +87,7 @@ function ViewPost({ note, onClose }) {
             <button
               type="submit"
               className=" font-primary bg-green-700 text-white py-2 px-4 rounded"
+              onClick={updateNote}
             >
               Save Changes
             </button>

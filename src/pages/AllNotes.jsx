@@ -16,7 +16,10 @@ function AllNotes() {
     setOpen(!open);
     console.log(open);
   };
-
+  const handleDeleteNote = (deletedNoteId) => {
+    setNotes(notes.filter((note) => note.id !== deletedNoteId));
+    setSelectedNote(null);
+  };
   const handleViewPost = (d) => {
     setSelectedNote(d);
   };
@@ -68,7 +71,11 @@ function AllNotes() {
         </div>
         {open ? <Modal /> : null}
         {selectedNote && (
-          <ViewPost note={selectedNote} onClose={() => setSelectedNote(null)} />
+          <ViewPost
+            note={selectedNote}
+            onClose={() => setSelectedNote(null)}
+            onDelete={handleDeleteNote}
+          />
         )}
         {allData
           ?.filter((item) => {
