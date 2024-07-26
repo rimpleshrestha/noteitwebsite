@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Logout() {
+  const navigate = useNavigate();
   const deleteSession = async () => {
     /* your delete sessoin here */
   };
@@ -9,7 +11,8 @@ function Logout() {
       <button
         className="font-primary font-semibold mx-5"
         onClick={() => {
-          deleteSession();
+          localStorage.clear();
+          navigate("/login");
         }}
       >
         Logout
