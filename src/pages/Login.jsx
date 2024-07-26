@@ -24,6 +24,7 @@ axios.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
+      localStorage.removeItem("userId"); // Remove user ID from local storage
       window.location = "/login";
     }
     return Promise.reject(error);
@@ -57,6 +58,7 @@ function Login() {
       if (response.data.success) {
         setLoginError("");
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId); // Save the user ID to local storage
         navigate("/all-notes");
       } else {
         setLoginError(response.data.message || "Login failed");

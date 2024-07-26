@@ -12,17 +12,21 @@ function Modal({ initialNote, onClose }) {
     if (initialNote) {
       setValue("title", initialNote.title);
       setValue("content", initialNote.content);
-      // Assuming 'favorate' is the correct field name based on your previous implementation
-      setValue("favorate", initialNote.favorate);
     }
   }, [initialNote, setValue]);
 
   const createNew = (data) => {
-    console.log({ ...data, user_id: localStorage.getItem("userId") });
+    const userId = localStorage.getItem("userId"); // Get user ID from local storage
+    console.log("User ID from local storage:", userId); // Log user ID to console
+    if (!userId) {
+      alert("User ID is required");
+      return; // Exit the function if user ID is not present
+    }
+
     axios
       .post("http://localhost:8070/Note/save", {
         ...data,
-        user_id: localStorage.getItem("userId"),
+        user_id: userId, // Include user ID
       })
       .then((res) => {
         console.log(res);
@@ -31,13 +35,21 @@ function Modal({ initialNote, onClose }) {
       })
       .catch((error) => {
         console.error("Error creating note:", error);
-        // Handle error state or display error message to user
       });
   };
 
   const updateNote = (data) => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("User ID is required");
+      return; // Exit if user ID is not present
+    }
+
     axios
-      .put(`http://localhost:8070/Note/update/${initialNote.id}`, data)
+      .put(`http://localhost:8070/Note/update/${initialNote.id}`, {
+        ...data,
+        user_id: userId,
+      })
       .then((res) => {
         console.log(res);
         alert("Note updated");
@@ -45,7 +57,6 @@ function Modal({ initialNote, onClose }) {
       })
       .catch((error) => {
         console.error("Error updating note:", error);
-        // Handle error state or display error message to user
       });
   };
 
@@ -59,11 +70,7 @@ function Modal({ initialNote, onClose }) {
 
   const handleClose = () => {
     setClose(!close);
-  };
-
-  const handleDelete = () => {
-    // Implement delete functionality if needed
-    alert("Delete functionality to be implemented.");
+    onClose(); // Call onClose to trigger the parent modal close handler
   };
 
   return close ? null : (
@@ -96,9 +103,9 @@ function Modal({ initialNote, onClose }) {
           ></textarea>
           <div className="flex mt-4">
             <button
-              type="button" // Change to 'button' to make it functional
+              type="button"
               className="bg-primary text-white py-2 px-4 rounded"
-              onClick={handleDelete} // Implement delete functionality
+              onClick={() => alert("Delete functionality to be implemented.")}
             >
               Delete
             </button>
