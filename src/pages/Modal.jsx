@@ -3,11 +3,12 @@ import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Modal({ initialNote, onClose }) {
   const [close, setClose] = useState(false);
   const { register, handleSubmit, setValue } = useForm();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (initialNote) {
       setValue("title", initialNote.title);
@@ -20,6 +21,7 @@ function Modal({ initialNote, onClose }) {
     console.log("User ID from local storage:", userId); // Log user ID to console
     if (!userId) {
       alert("User ID is required");
+      navi;
       return; // Exit the function if user ID is not present
     }
 
@@ -62,9 +64,11 @@ function Modal({ initialNote, onClose }) {
 
   const onSubmit = (data) => {
     if (initialNote) {
-      updateNote(data); // Update existing note
+      updateNote(data);
+      navigate("/"); // Update existing note
     } else {
-      createNew(data); // Create new note
+      createNew(data);
+      navigate("/"); // Create new note
     }
   };
 
@@ -103,15 +107,8 @@ function Modal({ initialNote, onClose }) {
           ></textarea>
           <div className="flex mt-4">
             <button
-              type="button"
-              className="bg-primary text-white py-2 px-4 rounded"
-              onClick={() => alert("Delete functionality to be implemented.")}
-            >
-              Delete
-            </button>
-            <button
               type="submit"
-              className="bg-primary text-white py-2 px-12 rounded ml-4"
+              className="bg-primary text-white py-2 px-12 rounded "
             >
               {initialNote ? "Update" : "Submit"}
             </button>

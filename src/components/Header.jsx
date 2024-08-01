@@ -5,27 +5,30 @@ import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
 import Logout from "./Logout";
+import { useSelector } from "react-redux";
 function Header() {
   const [open, setOpen] = useState(false);
-
+  const stat = useSelector((state) => state.auth.status);
+  console.log(status);
   const navItems = [
     {
       name: "Notes",
       slug: "/all-notes",
+      status: stat,
     },
-    {
-      name: "Favorites",
-      slug: "/favorates",
-    },
+
     {
       name: "Login",
       slug: "/login",
+      status: !stat,
     },
     {
       name: "Signup",
       slug: "/signup",
+      status: !stat,
     },
   ];
+
   const navigate = useNavigate();
   return (
     <div>
@@ -49,19 +52,20 @@ function Header() {
             >
               {open ? <TfiClose /> : <TfiAlignRight />}
             </li>
-            {navItems.map((item) => (
-              <li
-                key={item.name}
-                onClick={() => navigate(`${item.slug}`)}
-                className={`mx-5 font-primary z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
-                  open ? "max-sm:block p-2 mr-8   " : "max-sm:hidden"
-                }`}
-              >
-                {item.name}
-              </li>
-            ))}
-
-            <Logout />
+            {navItems.map((item) =>
+              item.status ? (
+                <li
+                  key={item.name}
+                  onClick={() => navigate(`${item.slug}`)}
+                  className={`mx-5 font-primary z-20  cursor-pointer  hover:underline underline-offset-8 font-medium transition-transform ${
+                    open ? "max-sm:block p-2 mr-8   " : "max-sm:hidden"
+                  }`}
+                >
+                  {item.name}
+                </li>
+              ) : null
+            )}
+            {stat ? <Logout /> : null}
           </ul>
         </nav>
       </header>

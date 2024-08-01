@@ -8,7 +8,7 @@ import ViewPost from "./ViewPost";
 function AllNotes() {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
-  const [favorate, setFavorate] = useState(false);
+
   const [selectedNote, setSelectedNote] = useState(null);
   const [allData, setAllData] = useState([]);
 
@@ -88,20 +88,6 @@ function AllNotes() {
               key={nanoid()}
               onClick={() => handleViewPost(d)}
             >
-              <p className="font-semibold font-primary mt-3 mb-6 flex justify-between items-center">
-                {d.id}
-                {favorate ? (
-                  <FaHeart
-                    className="cursor-pointer"
-                    onClick={() => setFavorate(!favorate)}
-                  />
-                ) : (
-                  <FaRegHeart
-                    className="cursor-pointer"
-                    onClick={() => setFavorate(!favorate)}
-                  />
-                )}
-              </p>
               <h1 className="text-xl font-semibold font-primary mt-2">
                 {d.title}
               </h1>

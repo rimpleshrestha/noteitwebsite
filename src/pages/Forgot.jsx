@@ -47,24 +47,6 @@ function Forgot() {
             <span className="text-red-500">New password is required</span>
           )}
 
-          <Input
-            label="Confirm New Password"
-            labelStyle="capitalize font-semibold my-2"
-            className="rounded-md"
-            type="password"
-            placeholder="Confirm your new password"
-            {...register("confirmNewPassword", {
-              required: true,
-              validate: (value) =>
-                value === newPassword || "Passwords do not match",
-            })}
-          />
-          {errors.confirmNewPassword && (
-            <span className="text-red-500">
-              {errors.confirmNewPassword.message}
-            </span>
-          )}
-
           <Button className="text-white bg-primary mt-6 rounded-md">
             Update
           </Button>

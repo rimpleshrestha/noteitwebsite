@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../tools/authSlice";
 
 // Set up axios interceptors
 axios.interceptors.request.use(
@@ -38,6 +40,7 @@ function Login() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loginError, setLoginError] = useState("");
 
   useEffect(() => {
@@ -59,6 +62,7 @@ function Login() {
         setLoginError("");
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId); // Save the user ID to local storage
+        dispatch(login(response.data));
         navigate("/all-notes");
       } else {
         setLoginError(response.data.message || "Login failed");

@@ -12,8 +12,8 @@ import Forgot from "./pages/Forgot.jsx";
 import ChangePassword from "./pages/ChangePassword.jsx";
 import AllNotes from "./pages/AllNotes.jsx";
 import Error from "./pages/Error.jsx";
+import AuthLayout from "./components/AuthLayout.jsx";
 
-import Favorates from "./pages/Favorates.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,36 +21,60 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Home />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Signup />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/forgot",
-        element: <Forgot />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Forgot />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/change-password",
-        element: <ChangePassword />,
+        element: (
+          <AuthLayout authentication={false}>
+            <ChangePassword />,
+          </AuthLayout>
+        ),
       },
       {
         path: "/all-notes",
-        element: <AllNotes />,
-      },
-      {
-        path: "/favorates",
-        element: <Favorates />,
+        element: (
+          <AuthLayout>
+            <AllNotes />,
+          </AuthLayout>
+        ),
       },
 
       {
         path: "*",
-        element: <Error />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Error />,
+          </AuthLayout>
+        ),
       },
     ],
   },

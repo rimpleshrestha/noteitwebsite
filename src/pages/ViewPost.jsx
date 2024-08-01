@@ -3,10 +3,11 @@ import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ViewPost({ note, onClose }) {
   const { register, handleSubmit, setValue } = useForm();
-
+  const navigate = useNavigate();
   useEffect(() => {
     setValue("title", note.title);
     setValue("content", note.content);
@@ -19,10 +20,13 @@ function ViewPost({ note, onClose }) {
         {
           title: data.title,
           content: data.content,
-          favorate: data.favorate,
+
           user_id: note.user.id, // Assuming the note object has a user property with an id
         }
       );
+
+      navigate("/");
+
       console.log(response.data); // This will log "Note updated successfully"
       onClose(); // Close the modal after successful update
     } catch (error) {
@@ -39,6 +43,9 @@ function ViewPost({ note, onClose }) {
       const response = await axios.delete(
         `http://localhost:8070/Note/delete/${note.id}`
       );
+
+      navigate("/");
+
       console.log(response.data);
       onDelete(note.id); // Call the onDelete prop to update the parent component
     } catch (error) {
@@ -77,13 +84,8 @@ function ViewPost({ note, onClose }) {
             placeholder="enter your content here"
             {...register("content", { required: true })}
           ></textarea>
-          <div className="flex items-center font-semibold font-primary  my-3">
-            <label htmlFor="favorate" className="mr-2 inline-block">
-              Favorite
-            </label>
-            <input type="checkbox" id="favorate" {...register("favorate")} />
-          </div>
-          <div className="flex items-center justify-between">
+
+          <div className="flex mt-4 items-center justify-between">
             <button
               type="submit"
               className=" font-primary bg-green-700 text-white py-2 px-4 rounded"
