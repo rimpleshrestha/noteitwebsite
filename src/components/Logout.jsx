@@ -8,7 +8,8 @@ function Logout() {
 
   const dispatch = useDispatch();
   return (
-    <div>
+
+<div>
       <button
         className="font-primary font-semibold mx-5"
         onClick={() => {

@@ -52,6 +52,7 @@ function Login() {
 
       if (response.data.success) {
         setLoginError("");
+        /* just like how you have added the token and user id in this code  */
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId); // Save the user ID to local storage
         dispatch(login(response.data));
@@ -81,6 +82,7 @@ function Login() {
             labelStyle="capitalize font-semibold my-2"
             className="rounded-md lowercase"
             placeholder="What is your email"
+            autoComplete="off"
             {...register("email", {
               required: "Email is required",
               pattern: {

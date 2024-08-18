@@ -65,6 +65,7 @@ function Signup() {
             labelStyle="capitalize font-semibold my-2"
             className="rounded-md"
             placeholder="What is your name"
+            autoComplete="off"
             {...register("name", { required: "Name is required" })}
           />
           {errors.name && (
@@ -77,6 +78,7 @@ function Signup() {
             labelStyle="capitalize font-semibold my-2"
             className="rounded-md lowercase"
             placeholder="What is your email"
+            autoComplete="off"
             {...register("email", {
               required: "Email is required",
               pattern: {

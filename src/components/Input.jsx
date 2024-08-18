@@ -25,6 +25,7 @@ function Input(
         id={id}
         ref={ref}
         placeholder={placeholder}
+        
         {...props}
       ></input>
     </>
