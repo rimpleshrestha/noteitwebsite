@@ -2,8 +2,7 @@ import React from "react";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { useNavigate } from "react-router-dom";
 function Forgot() {
   const {
     register,
@@ -45,7 +44,7 @@ function Forgot() {
 
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center max-sm:px-10">
-      <h1 className="text-2xl font-semibold font-primary">Forgot Password</h1>
+      <h1 className="text-2xl font-semibold font-primary">Change Password</h1>
       <div className="w-1/3 max-xl:w-1/2 max-sm:w-full">
         <form onSubmit={handleSubmit(forgotPassword)}>
           <Input

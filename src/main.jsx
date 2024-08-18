@@ -9,7 +9,6 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Forgot from "./pages/Forgot.jsx";
-
 import AllNotes from "./pages/AllNotes.jsx";
 import Error from "./pages/Error.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
