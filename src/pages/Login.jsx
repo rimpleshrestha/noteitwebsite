@@ -44,6 +44,11 @@ function Login() {
   const [loginError, setLoginError] = useState("");
 
   useEffect(() => {
+    // Request notification permission on component mount
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+
     // Check if user is already logged in
     const token = localStorage.getItem("token");
     if (token) {
@@ -65,7 +70,18 @@ function Login() {
         dispatch(login(response.data));
         navigate("/all-notes");
       } else {
-        setLoginError(response.data.message || "Login failed");
+        // Check if the error message is related to incorrect password
+        if (response.data.message === "Incorrect password") {
+          setLoginError("Password is incorrect!");
+          if (Notification.permission === "granted") {
+            new Notification("Login Error", {
+              body: "Password is incorrect!",
+              icon: "http://localhost:8070/path-to-your-icon.png", // Optional: Add an icon
+            });
+          }
+        } else {
+          setLoginError(response.data.message || "Login failed");
+        }
       }
     } catch (error) {
       setLoginError(
@@ -133,7 +149,7 @@ function Login() {
           to="/forgot"
           className="font-primary inline-block my-3 font-medium"
         >
-          Forgot your password?
+          Change your password?
         </Link>
       </div>
     </div>

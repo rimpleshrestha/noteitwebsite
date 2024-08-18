@@ -11,7 +11,7 @@ function Home() {
       <div className=" text-center">
         <div className="">
           <h1 className="text-5xl max-md:text-3xl font-semibold font-primary mb-3 max-sm:text-3xl">
-            You're Brain's Backup
+            Your Brain's Backup
           </h1>
           <p className="text-2xl max-sm:text-xl">
             <span className="inline-block font-semibold mr-1 ">NoteIT: </span>

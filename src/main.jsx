@@ -9,7 +9,7 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Forgot from "./pages/Forgot.jsx";
-import ChangePassword from "./pages/ChangePassword.jsx";
+
 import AllNotes from "./pages/AllNotes.jsx";
 import Error from "./pages/Error.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
@@ -51,14 +51,7 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
-      {
-        path: "/change-password",
-        element: (
-          <AuthLayout authentication={false}>
-            <ChangePassword />,
-          </AuthLayout>
-        ),
-      },
+
       {
         path: "/all-notes",
         element: (
